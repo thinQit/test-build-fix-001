@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id           String   @id @default(uuid())
+  email        String   @unique
+  passwordHash String
+  role         String   @default("admin")
+  createdAt    DateTime @default(now())
+}
+
+model Lead {
+  id        String   @id @default(uuid())
+  name      String
+  email     String
+  company   String?
+  message   String
+  source    String?
+  status    String   @default("new")
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id        String   @id @default(uuid())
+  author    String
+  role      String?
+  company   String?
+  quote     String
+  avatarUrl String?
+  approved  Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model PricingPlan {
+  id           String   @id @default(uuid())
+  name         String
+  priceMonthly Float
+  priceYearly  Float?
+  features     String?
+  ctaText      String?
+  isFeatured   Boolean  @default(false)
+  createdAt    DateTime @default(now())
+}
+
+model SiteContent {
+  id           String  @id @default(uuid())
+  heroTitle    String?
+  heroSubtitle String?
+  heroCtaText  String?
+  heroImageUrl String?
+  colorPrimary String?
+  updatedAt    DateTime @updatedAt
+}
